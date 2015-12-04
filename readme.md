@@ -20,6 +20,72 @@ Ao realizar **User-related** calls e **Film-related** calls adicione a seguinte 
 
 	Authorization: Bearer [token]
 
+## Geo calls
+
+### get near films: [GET] /near/{distance},{lat},{lng}
+
+Onde:
+
+**distance**: distance in KM
+**lat** `<integer>`: latitude
+**lng** `<integer>`: longitude
+
+O retorno será uma lista de filmes em um raio de `distance` KM:
+
+	[
+		{
+			"omdb":,
+			"lat":,
+			"lng":,
+			"distance":
+		},
+		{
+			"omdb":,
+			"lat":,
+			"lng":,
+			"distance":
+		},
+		...
+	]
+
+Exemplo:
+
+	POST: /near/50,37,-122
+
+Retorno:
+
+	[
+		{
+			"omdb":20,
+			"lat":37.38714,
+			"lng":-122.079354,
+			"distance":43.618078982077
+		},
+		{
+			"omdb":7,
+			"lat":37.393885,
+			"lng":-122.078916,
+			"distance":44.352270483297
+			},
+		{
+			"omdb":2,
+			"lat":37.394011,
+			"lng":-122.095528,
+			"distance":44.621582141654
+		},
+		{
+			"omdb":9,
+			"lat":37.402653,
+			"lng":-122.079354,
+			"distance":45.321241097259
+		},
+		{
+			"omdb":7,
+			"lat":37.401724,
+			"lng":-122.114646,
+			"distance":45.809211542246
+		}
+	]
 
 ## User-related calls
 
