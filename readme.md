@@ -1,6 +1,27 @@
 # api.filmap
 
-## Authenticate: [ POST ] /authenticate
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [Authenticate: [ POST ] /authenticate](#authenticate)
+- [Geo calls](#geocalls)
+	- [get near films: [GET] /near/{distance},{lat},{lng}](#near)
+- [User-related calls](#userrelated)
+	- [get all users: [ GET ] /user](#getallusers)
+	- [create new user: [ POST ] /user](#createuser)
+	- [get user: [ GET ] /user/{ id }](#getuser)
+	- [update user: [ PUT ] /user/{ id }](#updateuser)
+- [Film-related calls](#filmrelated)
+	- [get all films for the authenticated user: [ GET ] /films](#getallfilms)
+	- [save film: [ POST ] /films](#savefilm)
+	- [Get specific film: [ GET ] /films/{id}](#getfilm)
+	- [Delete specific film: [ DELETE ] /films/{id}](#deletefilm)
+	- [Mark film as watched: [ POST ] /films/{id}/watch](#watchfilm)
+- [Responses](#responses)
+	- [Errors](#errors)
+	- [Success](#success)
+
+
+## <a name="authenticate"></a> Authenticate: [ POST ] /authenticate
 Propósito: get auth token
 
 Send a POST request with: 
@@ -20,9 +41,9 @@ Ao realizar **User-related** calls e **Film-related** calls adicione a seguinte 
 
 	Authorization: Bearer [token]
 
-## Geo calls
+## <a name="geocalls"></a> Geo calls
 
-### get near films: [GET] /near/{distance},{lat},{lng}
+### <a name="near"></a> get near films: [GET] /near/{distance},{lat},{lng}
 
 Onde:
 
@@ -88,9 +109,9 @@ Retorno:
 		}
 	]
 
-## User-related calls
+## <a name="userrelated"></a> User-related calls
 
-###get all users: [ GET ] /user
+### <a name="getallusers"></a> get all users: [ GET ] /user
 Propósito: get all users
 Response format:
 
@@ -120,7 +141,7 @@ Onde:
 **name**: nome do usuário
 **email**: e-mail do usuário
 
-### create new user: [ POST ] /user
+### <a name="createuser"></a> create new user: [ POST ] /user
 Send a **post** request with:
 
     'name' = ,
@@ -136,7 +157,7 @@ Onde:
 **password**: senha
 **password_confirmation**: mesma senha para confirmação
 
-### get user: [ GET ] /user/{ id }
+### <a name="getuser"></a> get user: [ GET ] /user/{ id }
 
 Response format:
 
@@ -156,7 +177,7 @@ Onde:
 **name**: nome do usuário
 **email**: e-mail do usuário
 
-### update user: [ PUT ] /user/{ id }
+### <a name="updateuser"></a>update user: [ PUT ] /user/{ id }
 
 To update a user send a **put** request with (optional):
 
@@ -173,9 +194,9 @@ Onde:
 **password**: senha
 **password_confirmation**: mesma senha para confirmação
 
-## Film-related calls
+## <a name="filmrelated"></a>Film-related calls
 
-###get all films for the authenticated user: [ GET ] /films
+### <a name="getallfilms"></a> get all films for the authenticated user: [ GET ] /films
 
 Response format:
 
@@ -201,7 +222,7 @@ Response format:
     	{"response":true}
     ]
 
-### save film: [ POST ] /films
+### <a name="savefilm"></a>save film: [ POST ] /films
 
 Send a POST request with:
 
@@ -212,7 +233,7 @@ Send a POST request with:
 
 Note: **lat** and **lng** are optional inputs.
 
-### Get specific film: [ GET ] /films/{id}
+### <a name="getfilm"></a>Get specific film: [ GET ] /films/{id}
 
 Response format:
 
@@ -225,14 +246,14 @@ Response format:
     }
 
 
-### Delete specific film: [ DELETE ] /films/{id}
+### <a name="deletefilm"></a>Delete specific film: [ DELETE ] /films/{id}
 
-### Mark film as watched: [ POST ] /films/{id}/watch
+### <a name="watchfilm"></a>Mark film as watched: [ POST ] /films/{id}/watch
 
 
-## Responses
+## <a name="responses"></a>Responses
 
-### Errors
+### <a name="errors"></a>Errors
 
 Caso ocorra erro, o formato será:
 
@@ -241,7 +262,7 @@ Caso ocorra erro, o formato será:
 	    "error": <error description>,
     }
 
-### Success
+### <a name="success"></a>Success
 
 * `POST requests` will always return `HTTP 200` to indicate that the operation was successful.
 
