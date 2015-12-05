@@ -26,9 +26,10 @@ Ao realizar **User-related** calls e **Film-related** calls adicione a seguinte 
 
 Onde:
 
-**distance**: distance in KM
-**lat** `<integer>`: latitude
-**lng** `<integer>`: longitude
+* **distance**: distance in KM
+* **lat** `<integer>`: latitude
+* **lng** `<integer>`: longitude
+
 
 O retorno será uma lista de filmes em um raio de `distance` KM:
 

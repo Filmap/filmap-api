@@ -83,7 +83,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = JWTAuth::authenticate();
         
         if ($user->id != $id) {
             return response()->json(["response" => False, "error" => "Permission denied"], 403);
@@ -126,11 +126,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = JWTAuth::parseToken()->authenticate();
-        
-        if ($user->id != $id) {
-            return response()->json(["response" => False, "error" => "Permission denied"], 403);
-        }
+        $user = JWTAuth::authenticate();
+
+        // if ($user->id != $id) {
+        //     return response()->json(["response" => False, "error" => "Permission denied"], 403);
+        // }
 
         $user->delete();
     }
