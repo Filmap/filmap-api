@@ -37,17 +37,29 @@ class Film extends Model
 
 	public function scopeNear($query, $radius, $lat, $lng)
 	{
+		// SELECT id, ( 
+		// 	3959 * acos( 
+		// 		cos( radians(37) ) * cos( radians( lat ) ) 
+		// 		* cos( radians( lng ) - radians(-122) ) 
+		// 		+ sin( radians(37) ) * sin( radians( lat ) ) ) ) 
+		// AS distance 
+		// FROM markers 
+		// HAVING distance < 25 
+		// ORDER BY distance 
+		// LIMIT 0 , 20;
+
 		// return $this->geo()->near($radius, $lat, $lng);
 		return $query->join('geos', 'films.id', '=', 'geos.film_id')
 					->select(DB::raw('films.omdb, geos.lat, geos.lng,
 										( 6371 * acos( 
-											cos( radians(' . $lat . ') ) * cos( radians( lat ) ) 
-											* cos( radians( lng ) - radians(' . $lng . ') ) 
+											cos( radians(' . $lat . ') ) * cos( radians( geos.lat ) ) 
+											* cos( radians( geos.lng ) - radians(' . $lng . ') ) 
 											+ sin( radians(' . $lat . ') ) 
-											* sin( radians( lat ) ) ) )
+											* sin( radians( geos.lat ) ) ) )
 										AS radius '
 									))
 					->having('radius', '<', $radius)
+					->having('radius', '>', 0.0001)
 					->orderBy('radius');
 	}
 }

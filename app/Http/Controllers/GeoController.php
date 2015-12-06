@@ -21,9 +21,6 @@ class GeoController extends Controller
      */
     public function nearFilms($radius, $lat, $lng)
     {
-
-        $lat = intval($lat);
-        $lng = intval($lng);
         $films = Film::near($radius, $lat, $lng)->get();
 
         return json_encode($films); 
