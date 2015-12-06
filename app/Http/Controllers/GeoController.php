@@ -19,12 +19,12 @@ class GeoController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function filmsAround($distance, $lat, $lng)
+    public function nearFilms($radius, $lat, $lng)
     {
 
         $lat = intval($lat);
         $lng = intval($lng);
-        $films = Film::near($distance, $lat, $lng)->get();
+        $films = Film::near($radius, $lat, $lng)->get();
 
         return json_encode($films); 
     }
