@@ -58,6 +58,7 @@ class UserController extends Controller
         ]);
 
         $user->save();
+        return response()->json(["response" => True], 200);
     }
 
     /**

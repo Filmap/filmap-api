@@ -73,7 +73,7 @@ class FilmController extends Controller
             $film->geo()->save($geo);
         }
 
-        // return redirect()->route('result')->with(['confirmed' => True]);
+        return response()->json(["response" => True], 200);
     }
 
     /**
