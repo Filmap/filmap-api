@@ -25,10 +25,10 @@ Route::group(['middleware' => 'guest'], function() {
 /*
 	Get near films based on coordinates
 
-	@param distance, lat, long
-	@return json with omdb_id, (lat, long) and distance
+	@param radius, lat, long
+	@return json with omdb_id, (lat, long) and radius
 */
-Route::get('near/{distance},{lat},{long}', 'GeoController@filmsAround');
+Route::get('near/{radius},{lat},{long}', 'GeoController@nearFilms');
 
 Route::group(['middleware' => 'jwt.auth'], function() {
 

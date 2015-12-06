@@ -40,7 +40,7 @@ class FilmController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'omdb' => 'required|integer',
+            'omdb' => 'required|string',
             'watched' => 'required|boolean',
         ]);
 

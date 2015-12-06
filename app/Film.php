@@ -35,9 +35,9 @@ class Film extends Model
 		return $this->hasOne('App\Geo');
 	}
 
-	public function scopeNear($query, $distance, $lat, $lng)
+	public function scopeNear($query, $radius, $lat, $lng)
 	{
-		// return $this->geo()->near($distance, $lat, $lng);
+		// return $this->geo()->near($radius, $lat, $lng);
 		return $query->join('geos', 'films.id', '=', 'geos.film_id')
 					->select(DB::raw('films.omdb, geos.lat, geos.lng,
 										( 6371 * acos( 
@@ -45,9 +45,9 @@ class Film extends Model
 											* cos( radians( lng ) - radians(' . $lng . ') ) 
 											+ sin( radians(' . $lat . ') ) 
 											* sin( radians( lat ) ) ) )
-										AS distance '
+										AS radius '
 									))
-					->having('distance', '<', $distance)
-					->orderBy('distance');
+					->having('radius', '<', $radius)
+					->orderBy('radius');
 	}
 }
