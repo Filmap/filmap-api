@@ -51,15 +51,14 @@ class Film extends Model
 		// return $this->geo()->near($radius, $lat, $lng);
 		return $query->join('geos', 'films.id', '=', 'geos.film_id')
 					->select(DB::raw('films.omdb, geos.lat, geos.lng,
-										( 6371 * acos( 
+										TRUNCATE( ( 6371 * acos( 
 											cos( radians(' . $lat . ') ) * cos( radians( geos.lat ) ) 
 											* cos( radians( geos.lng ) - radians(' . $lng . ') ) 
 											+ sin( radians(' . $lat . ') ) 
-											* sin( radians( geos.lat ) ) ) )
-										AS radius '
+											* sin( radians( geos.lat ) ) ) ), 3)
+										AS distance '
 									))
-					->having('radius', '<', $radius)
-					->having('radius', '>', 0.0001)
-					->orderBy('radius');
+					->having('distance', '<', $radius)
+					->orderBy('distance');
 	}
 }

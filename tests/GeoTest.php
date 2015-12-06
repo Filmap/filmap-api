@@ -18,7 +18,7 @@ class GeoTest extends TestCase
     public function testNear()
     {
         $response = $this->get('/near/50,37,-122')->seeJson([
-                "radius" => 43.626375422058,
+                "distance" => 43.626,
              ]);
     }
 }

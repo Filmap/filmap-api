@@ -59,53 +59,59 @@ O retorno será uma lista de filmes em um raio de `radius` KM:
 			"omdb":,
 			"lat":,
 			"lng":,
-			"radius":
+			"distance":
 		},
 		{
 			"omdb":,
 			"lat":,
 			"lng":,
-			"radius":
+			"distance":
 		},
 		...
 	]
 
 Exemplo:
 
-	POST: /near/50,37,-122
+	POST: /near/50,37.386339,-122.085823
 
 Retorno:
 
 	[
 		{
-			"omdb":20,
-			"lat":37.38714,
-			"lng":-122.079354,
-			"radius":43.618078982077
+			"omdb":"6",
+			"lat":37.386339,
+			"lng":-122.085823,
+			"distance":0
 		},
 		{
-			"omdb":7,
+			"omdb":"3",
+			"lat":37.38714,
+			"lng":-122.083235,
+			"distance":0.245
+		},
+		{
+			"omdb":"7",
 			"lat":37.393885,
 			"lng":-122.078916,
-			"radius":44.352270483297
-			},
+			"distance":1.037
+		},
 		{
-			"omdb":2,
+			"omdb":"4",
 			"lat":37.394011,
 			"lng":-122.095528,
-			"radius":44.621582141654
+			"distance":1.209
 		},
 		{
-			"omdb":9,
+			"omdb":"1",
 			"lat":37.402653,
 			"lng":-122.079354,
-			"radius":45.321241097259
+			"distance":1.901
 		},
 		{
-			"omdb":7,
+			"omdb":"5",
 			"lat":37.401724,
 			"lng":-122.114646,
-			"radius":45.809211542246
+			"distance":3.067
 		}
 	]
 
