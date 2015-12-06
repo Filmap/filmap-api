@@ -112,6 +112,47 @@ class UserTest extends TestCase
      *
      * @return void
      */
+    public function testStoreFilm()
+    {
+        
+        $response = $this->authenticateUser();
+        
+        $token = (json_decode($response->content())->token);
+        $user = JWTAuth::setToken($token)->authenticate();
+
+        $this->post('films', 
+            ['omdb' => 'tt8282828', 'watched' => 0, 'lat' => '-05.321331', 'lng' => '-032.13232'], 
+            ['HTTP_Authorization' => 'Bearer ' . $token])
+            ->assertResponseOk();
+    }
+
+    /**
+     * Get user.
+     *
+     * @return void
+     */
+    public function testGeoIsStored()
+    {
+        
+        $response = $this->authenticateUser();
+        
+        $token = (json_decode($response->content())->token);
+        $user = JWTAuth::setToken($token)->authenticate();
+
+        $this->post('films', 
+            ['omdb' => 'tt8282828', 'watched' => 0, 'lat' => '-05.321331', 'lng' => '-032.13232'], 
+            ['HTTP_Authorization' => 'Bearer ' . $token]);
+
+        $film = App\Film::where('omdb', 'tt8282828')->first();
+        $this->assertEquals($film->geo->lat, '-5.321331');
+        $this->assertEquals($film->geo->lng, '-32.13232');
+    }
+
+    /**
+     * Get user.
+     *
+     * @return void
+     */
     public function testDeleteUser()
     {
         
@@ -124,4 +165,6 @@ class UserTest extends TestCase
             ['HTTP_Authorization' => 'Bearer ' . $token])
             ->assertResponseOk();
     }
+
+
 }
