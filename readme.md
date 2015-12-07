@@ -24,6 +24,7 @@
 ## <a name="authenticate"></a> Authenticate: [ POST ] /authenticate
 Propósito: get auth token
 
+
 Send a POST request with: 
 
     'email' = ,
