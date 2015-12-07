@@ -1,30 +1,20 @@
-# Required to run your project under the correct environment.
 language: php
-
-# Versions of PHP you want your project run with.
 php:
-  - 5.5.9
-  - 5.5
-  - 5.6
-  - hhvm
+ - 5.5.9
 
-# Commands to be run before your environment runs.
 before_script:
-  - composer self-update
-  - composer install --prefer-source --no-interaction --dev
-  - php artisan migrate --seed
+ - mv travis.env.php .env.testing.php
+ - mysql -e 'create database fm_db;'
+ - composer self-update
+ - composer install --dev --prefer-source --no-interaction
+ - chmod -R 777 storage
+ - php artisan migrate:install --env=testing --no-interaction -vvv
 
-# Commands you want to run that will verify your build.
-script: phpunit
+script:
+ - php artisan migrate --env=testing --no-interaction -vvv
+ - php artisan db:seed --env=testing --no-interaction -vvv
+ - phpunit
+ - php artisan migrate:rollback --env=testing --no-interaction -vvv
 
-# allow_failures: Allow this build to fail under the specified environments.
-# fast_finish: If your build fails do not continue trying to build, just stop.
 matrix:
-  allow_failures:
-    - php: hhvm
-  fast_finish: true
-
-# Customize when the notification emails are sent.
-notifications:
-    on_success: never
-    on_failure: always
+ fast_finish: true
