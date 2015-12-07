@@ -1,20 +1,13 @@
 language: php
+
 php:
- - 5.5.9
+  - 5.6
 
 before_script:
- - mv travis.env.php .env.testing.php
- - mysql -e 'create database fm_db;'
- - composer self-update
- - composer install --dev --prefer-source --no-interaction
- - chmod -R 777 storage
- - php artisan migrate:install --env=testing --no-interaction -vvv
+  - cp .env.travis .env
+  - mysql -e 'create database homestead_test;'
+  - composer self-update
+  - composer install --no-interaction
 
 script:
- - php artisan migrate --env=testing --no-interaction -vvv
- - php artisan db:seed --env=testing --no-interaction -vvv
- - phpunit
- - php artisan migrate:rollback --env=testing --no-interaction -vvv
-
-matrix:
- fast_finish: true
+  - vendor/bin/phpunit
