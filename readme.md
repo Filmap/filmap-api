@@ -1,6 +1,6 @@
-# api.filmap
+# filmap_api [![Build Status](https://travis-ci.org/duartefq/filmap_api.svg?branch=master)](https://travis-ci.org/duartefq/filmap_api)
 
-**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+**Table of Contents**
 
 - [Authenticate: [ POST ] /authenticate](#authenticate)
 - [Geo calls](#geocalls)
