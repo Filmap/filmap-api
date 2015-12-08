@@ -26,6 +26,6 @@ class SendWindowsPhoneNotification
      */
     public function handle(FilmWasStored $event)
     {
-        dd($event);
+        // Implement notification here
     }
 }

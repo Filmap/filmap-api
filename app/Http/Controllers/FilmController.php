@@ -122,10 +122,14 @@ class FilmController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($omdb)
     {
-        $film = Film::findOrFail($id);
-        $film->response = True;
+        $user = JWTAuth::parseToken()->authenticate();
+        $film = $user->films->where("omdb", $omdb)->first();
+
+        if ( is_null($film) ) {
+            return response()->json(["response" => False, "errors" => "User doesn't have this film"], 404);
+        }
 
         return json_encode($film);
     }
@@ -137,18 +141,20 @@ class FilmController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function watch($id)
+    public function watch($omdb)
     {
-        $film = Film::findOrFail($id);
-
         $user = JWTAuth::parseToken()->authenticate();
+        $film = $user->films->where("omdb", $omdb)->first();
+
+        if ( is_null($film) ) {
+            return response()->json(["response" => False, "errors" => "User doesn't have this film"], 404);
+        }
         
-        if ($user != $film->user) {
+        if ( $user->id != $film->user->id ) {
             return response()->json(["response" => False, "error" => "Permission denied"], 403);
         }
 
         $film->watched = True;
- 
         $film->save();
     }
 
@@ -158,13 +164,16 @@ class FilmController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($omdb)
     {
-        $film = Film::findOrFail($id);
-
         $user = JWTAuth::parseToken()->authenticate();
-        
-        if ($user != $film->user) {
+        $film = $user->films->where("omdb", $omdb)->first();
+
+        if ( is_null($film) ) {
+            return response()->json(["response" => False, "errors" => "User doesn't have this film"], 404);
+        }
+
+        if ( $user->id != $film->user->id ) {
             return response()->json(["response" => False, "error" => "Permission denied"], 403);
         }
 

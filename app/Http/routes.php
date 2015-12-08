@@ -55,16 +55,13 @@ Route::group(['middleware' => 'jwt.auth'], function() {
 		Route::post('/', 'FilmController@store');
 
 		// Get specific user's film
-		Route::get('{id}', 'FilmController@show');
-
-		// // Update film
-		// Route::put('{id}', 'FilmController@update');
+		Route::get('{omdb}', 'FilmController@show');
 
 		// Delete film for user 
-		Route::delete('{id}', 'FilmController@destroy');
+		Route::delete('{omdb}', 'FilmController@destroy');
 
 		// Update film as watched
-		Route::post('{id}/watch', 'FilmController@watch');
+		Route::post('{omdb}/watch', 'FilmController@watch');
 	});
 	
 });
