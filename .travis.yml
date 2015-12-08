@@ -12,3 +12,6 @@ before_script:
 script:
   - php artisan migrate --seed
   - vendor/bin/phpunit
+
+notifications:
+  slack: tadsifrn:GHaPhSlSFnv1aqjEAJUxhZhw
