@@ -20,43 +20,65 @@ class DatabaseSeeder extends Seeder
 
         Model::unguard();
 
-        $user = new User([
-            'name' => $faker->name,
-            'email' => $faker->email,
-            'password' => bcrypt('secret'),
-        ]);
+        $NUMBER_USERS = 5;
 
-        $user->save();
-
-        // Geo table
-        $coordinates = [
-            [37.386339,-122.085823],
-            [37.38714,-122.083235],
-            [37.393885,-122.078916],
-            [37.402653,-122.079354],
-            [37.394011, -122.095528],
-            [37.401724,-122.114646],
+        $latitude = [
+            -5.811914,
+            -5.821626,
+            -5.839130,
+            -5.842120,
+            -5.801140,
+            -5.811430,
+            -5.828402,
+            -5.811301,
+            -5.840302,
+            -5.812410,
         ];
 
-        for ($i=0; $i < count($coordinates); $i++) { 
+        $longitude = [
+            -35.212368,
+            -35.221813,
+            -35.235454,
+            -35.242454,
+            -35.204454,
+            -35.220054,
+            -35.241451,
+            -35.215454,
+            -35.232054,
+            -35.213442,
+        ];
 
-            $film = new Film([
-                    'omdb' => $faker->randomDigitNotNull,
-                    'user_id' => $user->id,
-                    'watched' => $faker->boolean(),
-                ]);
+        for ($i=0; $i < $NUMBER_USERS; $i++) { 
 
-            $film->save();
-
-            $geo = new Geo([
-                'lat' => $coordinates[$i][0],
-                'lng' => $coordinates[$i][1],
-                'film_id' => $film->id,
+            $user = new User([
+                'name' => $faker->name,
+                'email' => $faker->email,
+                'password' => bcrypt('secret'),
             ]);
 
-            $geo->save();
+            $user->save();
 
+            for ($j=0; $j < $NUMBER_USERS; $j++) { 
+
+                $film = new Film([
+                        'omdb'    => "tt" . $faker->randomNumber(7),
+                        'user_id' => $user->id,
+                        'watched' => $faker->boolean(),
+                    ]);
+
+                $film->save();
+
+                $geo = new Geo([
+                    'lat' => $faker->randomElement($latitude),
+                    'lng' => $faker->randomElement($longitude),
+                    'film_id' => $film->id,
+                ]);
+
+                $geo->save();
+
+            }
         }
+
         Model::reguard();
     }
 }
