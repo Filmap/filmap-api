@@ -26,7 +26,7 @@ class FilmController extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
 
-        $films = $user->films->push(["Response" => true])->toJson();
+        $films = $user->films->toJson();
 
         return $films;
     }
@@ -61,7 +61,7 @@ class FilmController extends Controller
 
         $user->films()->save($film);
 
-        // Saving the the location
+        // Saving the location
 
         if ($request->has('lat') && $request->has('lng')) {
 
