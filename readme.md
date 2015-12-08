@@ -16,7 +16,7 @@
 	- [save film: [ POST ] /films](#savefilm)
 	- [Get specific film: [ GET ] /films/{id}](#getfilm)
 	- [Delete specific film: [ DELETE ] /films/{id}](#deletefilm)
-	- [Mark film as watched: [ POST ] /films/{id}/watch](#watchfilm)
+	- [Mark film as watched: [ POST ] /films/{omdb}/watch](#watchfilm)
 - [Responses](#responses)
 	- [Errors](#errors)
 	- [Success](#success)
@@ -241,7 +241,7 @@ Send a POST request with:
 
 Note: **lat** and **lng** are optional inputs.
 
-### <a name="getfilm"></a>Get specific film: [ GET ] /films/{id}
+### <a name="getfilm"></a>Get specific film: [ GET ] /films/{omdb}
 
 Response format:
 
@@ -254,9 +254,9 @@ Response format:
     }
 
 
-### <a name="deletefilm"></a>Delete specific film: [ DELETE ] /films/{id}
+### <a name="deletefilm"></a>Delete specific film: [ DELETE ] /films/{omdb}
 
-### <a name="watchfilm"></a>Mark film as watched: [ POST ] /films/{id}/watch
+### <a name="watchfilm"></a>Mark film as watched: [ POST ] /films/{omdb}/watch
 
 
 ## <a name="responses"></a>Responses

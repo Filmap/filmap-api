@@ -12,13 +12,16 @@ use App\User;
 use App\Film;
 use App\Geo;
 
+use App\Events\FilmWasStored;
+use Event;
+
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class FilmController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Returns a listing of auth user's films.
      *
      * @return \Illuminate\Http\Response
      */
@@ -32,7 +35,41 @@ class FilmController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Auxiliar function to manage the notification event.
+     *
+     * Everytime a film is stored, it's checked whether there
+     * are any other films by a 1km-radius. 
+     *
+     * If any films are found, an Event is triggered and a 
+     * notification is sent to those users.
+     * 
+     * @param  $geo coordinates 
+     * @param  $user user who saved the film 
+     * @param  $film film being stored 
+    */
+    public function sendNotification($geo, $user, $film)
+    {
+        // Get users' id that marked a film nearby
+        // 1km radius
+        $users = Film::near(1, $geo->lat, $geo->lng)
+                    ->get()
+                    ->unique("user_id")
+                    ->pluck("user_id")
+                    ->all();
+
+        // Remove authenticated user from the search
+        if(($key = array_search($user->id, $users)) !== false) {
+            unset($users[$key]);
+        }
+
+        // If there were any films nearby, send the notific
+        if ( ! empty($users) ) {
+            Event::fire(new FilmWasStored($users, $user->id, $film));
+        }
+    }
+
+    /**
+     * Store a newly created film in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -50,6 +87,7 @@ class FilmController extends Controller
 
         $user = JWTAuth::parseToken()->authenticate();
 
+        // Avoid duplicate films
         if ($user->films->contains('omdb', $request['omdb'])) {
             return response()->json(["response" => False, "errors" => "Film already marked"], 400);
         }
@@ -61,14 +99,16 @@ class FilmController extends Controller
 
         $user->films()->save($film);
 
-        // Saving the location
-
+        // If location info was given
         if ($request->has('lat') && $request->has('lng')) {
 
             $geo = new Geo ([
                 'lat' => $request['lat'],
                 'lng' => $request['lng'],
             ]);
+
+            // Send notification
+            $this->sendNotification($geo, $user, $film);
 
             $film->geo()->save($geo);
         }
@@ -77,54 +117,63 @@ class FilmController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified film.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($omdb)
     {
-        $film = Film::findOrFail($id);
-        $film->response = True;
+        $user = JWTAuth::parseToken()->authenticate();
+        $film = $user->films->where("omdb", $omdb)->first();
+
+        if ( is_null($film) ) {
+            return response()->json(["response" => False, "errors" => "User doesn't have this film"], 404);
+        }
 
         return json_encode($film);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Mark film as watched.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function watch($id)
+    public function watch($omdb)
     {
-        $film = Film::findOrFail($id);
-
         $user = JWTAuth::parseToken()->authenticate();
+        $film = $user->films->where("omdb", $omdb)->first();
+
+        if ( is_null($film) ) {
+            return response()->json(["response" => False, "errors" => "User doesn't have this film"], 404);
+        }
         
-        if ($user != $film->user) {
+        if ( $user->id != $film->user->id ) {
             return response()->json(["response" => False, "error" => "Permission denied"], 403);
         }
 
         $film->watched = True;
- 
         $film->save();
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified film from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($omdb)
     {
-        $film = Film::findOrFail($id);
-
         $user = JWTAuth::parseToken()->authenticate();
-        
-        if ($user != $film->user) {
+        $film = $user->films->where("omdb", $omdb)->first();
+
+        if ( is_null($film) ) {
+            return response()->json(["response" => False, "errors" => "User doesn't have this film"], 404);
+        }
+
+        if ( $user->id != $film->user->id ) {
             return response()->json(["response" => False, "error" => "Permission denied"], 403);
         }
 

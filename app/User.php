@@ -45,4 +45,9 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasMany('App\Film');
     }
+
+    public function lastUserLocation()
+    {
+        return $this->films->last()->geo;
+    }
 }
