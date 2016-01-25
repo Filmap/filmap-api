@@ -68,9 +68,17 @@ class DatabaseSeeder extends Seeder
 
                 $film->save();
 
+                if ( $j < ($NUMBER_USERS - 1) ) {
+                    $lat = $faker->randomElement($latitude);
+                    $geo = $faker->randomElement($longitude);
+                } else {
+                    $lat = $latitude[0];
+                    $geo = $longitude[0];
+                }
+
                 $geo = new Geo([
-                    'lat' => $faker->randomElement($latitude),
-                    'lng' => $faker->randomElement($longitude),
+                    'lat' => $lat,
+                    'lng' => $geo,
                     'film_id' => $film->id,
                 ]);
 

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
+
 class Film extends Model
 {
     /**
@@ -30,6 +31,9 @@ class Film extends Model
 		return $this->belongsTo('App\User');
 	}
 
+	/**
+	 * @return App\Geo
+	 */
 	public function geo()
 	{
 		return $this->hasOne('App\Geo');
@@ -39,6 +43,13 @@ class Film extends Model
 	 * Queries
 	*/
 
+	/**
+	 * @param  $query
+	 * @param  number
+	 * @param  float
+	 * @param  float
+	 * @return [type]
+	 */
 	public function scopeNear($query, $radius, $lat, $lng)
 	{
 		// return $this->geo()->near($radius, $lat, $lng);
