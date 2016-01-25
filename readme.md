@@ -122,6 +122,7 @@ Retorno:
 
 ### <a name="getallusers"></a> get all users: [ GET ] /user
 Propósito: get all users
+
 Response format:
 
     [

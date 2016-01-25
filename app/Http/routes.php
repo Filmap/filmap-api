@@ -1,37 +1,59 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+/**
+ * TODO: Windows authentication in order to user Notifications center.
+ */
+Route::get('getwptoken', function(){
+	// client_id: ms-app://s-1-15-2-3920366865-733337861-2716891985-1299477039-167408987-1424105651-2138086432
+	// client_secret: Ucj/v/tIkNseT7+MqE+IL37W+4/aEfU5  
+	// 
+    // "grant_type=client_credentials&client_id=ms-app://s-1-15-2-3920366865-733337861-2716891985-1299477039-167408987-1424105651-2138086432&client_secret={1}&scope=notify.windows.com", urlEncodedSid, urlEncodedSecret);
+    // Headers: ("Content-Type", "application/x-www-form-urlencoded");
+	// response = client.UploadString("https://login.live.com/accesstoken.srf", body);
 
+		$client_id = "ms-app://s-1-15-2-3920366865-733337861-2716891985-1299477039-167408987-1424105651-2138086432";
+
+		$client_secret = "Ucj/v/tIkNseT7+MqE+IL37W+4/aEfU5";
+
+		$client = new \GuzzleHttp\Client();
+
+		$host = "https://login.live.com/";
+		$body = "grant_type=client_credentials&client_id=" . urlencode($client_id) . "&client_secret=" . urlencode($client_secret) . "&scope=notify.windows.com";
+		
+		$res = $client->request('POST', $host . $body );
+		
+		$json = json_decode( $res->getBody() );
+		// $json = json_decode($jsoncoded, true);
+
+		DB::table('windows_phone_auth')->insert(
+				['token' => $json->access_token]
+			);
+});
+
+/**
+ * Guest routes. No authentication required.
+ */
 Route::group(['middleware' => 'guest'], function() {
+	// 
 	Route::get('/', function () {
-	    return view('welcome');
+	    return ['Filmap' => 'awesome'];
 	});
 
+	// Authentication
 	Route::post('authenticate', 'Auth\AuthenticateController@authenticate');	
 
 	// Save user
 	Route::post('user', 'UserController@store');
 });
 
-/*
-	Get near films based on coordinates
-
-	@param radius, lat, long
-	@return json with omdb_id, (lat, long) and radius
-*/
-Route::get('near/{radius},{lat},{long}', 'GeoController@nearFilms');
-
+/**
+ * Authentication-required routes
+ */
 Route::group(['middleware' => 'jwt.auth'], function() {
 
+	/**
+	 * User-related routes
+	 */
 	Route::group(['prefix' => 'user'], function() {
 		// Get all users
 		Route::get('/', 'UserController@index');
@@ -47,6 +69,9 @@ Route::group(['middleware' => 'jwt.auth'], function() {
 
 	});
 
+	/**
+	 * Film-related routes
+	 */
 	Route::group(['prefix' => 'films'], function() {
 		// Get all films
 		Route::get('/', 'FilmController@index');
@@ -65,3 +90,11 @@ Route::group(['middleware' => 'jwt.auth'], function() {
 	});
 	
 });
+
+/*
+	Get near films based on coordinates
+
+	@param radius, lat, long
+	@return json with omdb_id, (lat, long) and radius
+*/
+Route::get('near/{radius},{lat},{long}', 'GeoController@nearFilms');
