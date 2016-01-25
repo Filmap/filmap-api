@@ -1,5 +1,5 @@
 # filmap_api 
-[![Build Status](https://travis-ci.org/duartefq/filmap_api.svg?branch=master)](https://travis-ci.org/duartefq/filmap_api) ![Safadao](https://img.shields.io/badge/safadao-aprova-orange.svg)
+[![Build Status](https://travis-ci.org/Filmap/filmap_api.svg?branch=master)](https://travis-ci.org/Filmap/filmap_api) ![Safadao](https://img.shields.io/badge/safadao-aprova-orange.svg)
 
 
 **Table of Contents**
