@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Validator;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\User;
@@ -16,7 +15,6 @@ use App\Events\FilmWasStored;
 use Event;
 
 use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
 
 class FilmController extends Controller
 {

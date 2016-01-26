@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Validator;
 
 use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
 
 use App\User;
 
@@ -128,10 +126,6 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = JWTAuth::authenticate();
-
-        // if ($user->id != $id) {
-        //     return response()->json(["response" => False, "error" => "Permission denied"], 403);
-        // }
 
         $user->delete();
     }

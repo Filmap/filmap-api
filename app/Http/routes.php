@@ -23,7 +23,6 @@ Route::get('getwptoken', function(){
 		$res = $client->request('POST', $host . $body );
 		
 		$json = json_decode( $res->getBody() );
-		// $json = json_decode($jsoncoded, true);
 
 		DB::table('windows_phone_auth')->insert(
 				['token' => $json->access_token]
