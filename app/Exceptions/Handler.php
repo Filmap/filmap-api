@@ -8,6 +8,9 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -46,11 +49,11 @@ class Handler extends ExceptionHandler
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
         
-        if ($e instanceof Tymon\JWTAuth\Exceptions\TokenExpiredException) {
+        if ($e instanceof TokenExpiredException) {
             return response()->json(['token_expired'], $e->getStatusCode());
         }
 
-        if ($e instanceof Tymon\JWTAuth\Exceptions\TokenInvalidException) {
+        if ($e instanceof TokenInvalidException) {
             return response()->json(['token_invalid'], $e->getStatusCode());
         }
 
