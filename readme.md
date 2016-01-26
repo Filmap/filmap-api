@@ -1,5 +1,7 @@
 # filmap_api 
-[![Build Status](https://travis-ci.org/Filmap/filmap_api.svg?branch=master)](https://travis-ci.org/Filmap/filmap_api) ![Safadao](https://img.shields.io/badge/safadao-aprova-orange.svg)
+[![Build Status](https://travis-ci.org/Filmap/filmap_api.svg?branch=master)](https://travis-ci.org/Filmap/filmap_api)
+![Safadao](https://img.shields.io/badge/safadao-aprova-orange.svg)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/3283d49a-03bb-40ff-a83c-a6f3fd1a6f04/mini.png)](https://insight.sensiolabs.com/projects/3283d49a-03bb-40ff-a83c-a6f3fd1a6f04)
 
 
 **Table of Contents**
