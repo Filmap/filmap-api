@@ -52,7 +52,6 @@ class Film extends Model
 	 */
 	public function scopeNear($query, $radius, $lat, $lng)
 	{
-		// return $this->geo()->near($radius, $lat, $lng);
 		return $query->join('geos', 'films.id', '=', 'geos.film_id')
 					->select(DB::raw('films.omdb, films.user_id, geos.lat, geos.lng,
 										TRUNCATE( ( 6371 * acos( 
@@ -65,5 +64,4 @@ class Film extends Model
 					->having('distance', '<', $radius)
 					->orderBy('distance');
 	}
-
 }
