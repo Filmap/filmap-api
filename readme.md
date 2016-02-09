@@ -1,7 +1,9 @@
 # filmap_api 
 [![Build Status](https://travis-ci.org/Filmap/filmap_api.svg?branch=master)](https://travis-ci.org/Filmap/filmap_api)
-![Safadao](https://img.shields.io/badge/safadao-aprova-orange.svg)
+[![StyleCI](https://styleci.io/repos/47415696/shield)](https://styleci.io/repos/47415696)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/3283d49a-03bb-40ff-a83c-a6f3fd1a6f04/mini.png)](https://insight.sensiolabs.com/projects/3283d49a-03bb-40ff-a83c-a6f3fd1a6f04)
+![Safadao](https://img.shields.io/badge/safadao-aprova-orange.svg)
+
 
 
 **Table of Contents**
