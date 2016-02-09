@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
-
-use App\User;
-use App\Geo;
 use App\Film;
+use App\Geo;
+use App\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -48,27 +47,25 @@ class DatabaseSeeder extends Seeder
             -35.213442,
         ];
 
-        for ($i=0; $i < $NUMBER_USERS; $i++) { 
-
+        for ($i = 0; $i < $NUMBER_USERS; $i++) {
             $user = new User([
-                'name' => $faker->name,
-                'email' => $faker->email,
+                'name'     => $faker->name,
+                'email'    => $faker->email,
                 'password' => bcrypt('secret'),
             ]);
 
             $user->save();
 
-            for ($j=0; $j < $NUMBER_USERS; $j++) { 
-
+            for ($j = 0; $j < $NUMBER_USERS; $j++) {
                 $film = new Film([
-                        'omdb'    => "tt" . $faker->randomNumber(7),
+                        'omdb'    => 'tt'.$faker->randomNumber(7),
                         'user_id' => $user->id,
                         'watched' => $faker->boolean(),
                     ]);
 
                 $film->save();
 
-                if ( $j < ($NUMBER_USERS - 1) ) {
+                if ($j < ($NUMBER_USERS - 1)) {
                     $lat = $faker->randomElement($latitude);
                     $geo = $faker->randomElement($longitude);
                 } else {
@@ -77,13 +74,12 @@ class DatabaseSeeder extends Seeder
                 }
 
                 $geo = new Geo([
-                    'lat' => $lat,
-                    'lng' => $geo,
+                    'lat'     => $lat,
+                    'lng'     => $geo,
                     'film_id' => $film->id,
                 ]);
 
                 $geo->save();
-
             }
         }
 

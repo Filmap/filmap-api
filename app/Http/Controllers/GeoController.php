@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-
 use App\Film;
 
 class GeoController extends Controller
@@ -11,15 +9,16 @@ class GeoController extends Controller
     /**
      * Finds the nearest films. 
      * Using the Haversine formula.
-     * Raw Query:
+     * Raw Query:.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function nearFilms($radius, $lat, $lng)
     {
         $films = Film::near($radius, $lat, $lng)->get();
 
-        return json_encode($films); 
+        return json_encode($films);
     }
 }

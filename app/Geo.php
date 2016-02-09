@@ -7,29 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 class Geo extends Model
 {
     /**
-	* The database table used by the model.
-	*
-	* @var string
-	*/
+     * The database table used by the model.
+     *
+     * @var string
+     */
     protected $table = 'geos';
 
     /**
-	* The attributes that are mass assignable.
-	*
-	* @var array
-	*/
-	protected $fillable = ['lat', 'lng'];
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['lat', 'lng'];
 
-	/*
-	* Relationships
-	*/
+    /*
+    * Relationships
+    */
 
-	public function film()
-	{
-		return $this->belongsTo('App\Film');
-	}
+    public function film()
+    {
+        return $this->belongsTo('App\Film');
+    }
 
-	/*
-	Queries
-	*/
+    /*
+    Queries
+    */
 }

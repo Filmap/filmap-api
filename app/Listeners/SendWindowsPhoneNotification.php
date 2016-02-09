@@ -19,7 +19,8 @@ class SendWindowsPhoneNotification
     /**
      * Handle the event.
      *
-     * @param  FilmWasStored  $event
+     * @param FilmWasStored $event
+     *
      * @return void
      */
     public function handle(FilmWasStored $event)
