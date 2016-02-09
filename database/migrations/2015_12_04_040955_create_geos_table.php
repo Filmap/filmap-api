@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateGeosTable extends Migration
 {
@@ -20,7 +20,7 @@ class CreateGeosTable extends Migration
 
             $table->integer('film_id')->unsigned();
             $table->foreign('film_id')->references('id')->on('films')->onDelete('cascade');
-            
+
             $table->timestamps();
         });
     }
