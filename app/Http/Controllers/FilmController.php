@@ -174,5 +174,6 @@ class FilmController extends Controller
         }
 
         $film->delete();
+        return response()->json(['response' => true], 200);
     }
 }

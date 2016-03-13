@@ -25,7 +25,9 @@ class AuthenticateController extends Controller
         }
 
         // all good so return the token
-        return response()->json(compact('token'));
+        $response = JWTAuth::setToken($token)->authenticate();
+        $response->token = $token;
+        return response()->json($response);
     }
 
     public function getUser()
